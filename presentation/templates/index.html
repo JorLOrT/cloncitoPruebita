@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ t('app.title') }}</title>
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=JetBrains+Mono:wght@500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+  {# Iconos: se definen una sola vez y se reutilizan con <use href="#i-…">. #}
+  <svg xmlns="http://www.w3.org/2000/svg" class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-library" viewBox="0 0 24 24"><path d="m16 6 4 14"/><path d="M12 6v14"/><path d="M8 8v12"/><path d="M4 4v16"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></symbol>
+    <symbol id="i-swap" viewBox="0 0 24 24"><path d="m16 3 4 4-4 4"/><path d="M20 7H4"/><path d="m8 21-4-4 4-4"/><path d="M4 17h16"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
+    <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><path d="M10 11v6"/><path d="M14 11v6"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/></symbol>
+    <symbol id="i-id" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><circle cx="8" cy="12" r="2.5"/><path d="M13 10h5"/><path d="M13 14h4"/></symbol>
+    <symbol id="i-barcode" viewBox="0 0 24 24"><path d="M3 5v14"/><path d="M8 5v14"/><path d="M12 5v14"/><path d="M17 5v14"/><path d="M21 5v14"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/></symbol>
+    <symbol id="i-coins" viewBox="0 0 24 24"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+    <symbol id="i-eraser" viewBox="0 0 24 24"><path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/><path d="M22 21H7"/><path d="m5 11 9 9"/></symbol>
+    <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></symbol>
+    <symbol id="i-loader" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></symbol>
+    <symbol id="i-wifi-off" viewBox="0 0 24 24"><path d="M12 20h.01"/><path d="M8.5 16.43a5 5 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 4.18-2.65"/><path d="M10.66 5c4.01-.36 8.14.9 11.34 3.76"/><path d="M16.85 11.25a10 10 0 0 1 2.22 1.68"/><path d="M5 13a10 10 0 0 1 5.24-2.76"/><path d="m2 2 20 20"/></symbol>
+  </svg>
+
+  <div class="app">
+
+    <!-- ================= MENÚ LATERAL ================= -->
+    <aside class="sidebar" id="sidebar">
+      <a class="marca" href="#/catalogo">
+        <span class="marca-logo"><svg class="ic" aria-hidden="true"><use href="#i-library"/></svg></span>
+        <span class="marca-texto">
+          <strong>{{ t('app.title') }}</strong>
+          <small>{{ t('app.tagline') }}</small>
+        </span>
+      </a>
+
+      <nav class="nav">
+        <a href="#/catalogo" data-ir="catalogo" data-icono="book">
+          <svg class="ic" aria-hidden="true"><use href="#i-book"/></svg><span>{{ t('nav.catalog') }}</span>
+          <b class="nav-contador" id="nav-libros">0</b>
+        </a>
+        <a href="#/prestamos" data-ir="prestamos" data-icono="swap">
+          <svg class="ic" aria-hidden="true"><use href="#i-swap"/></svg><span>{{ t('nav.loans') }}</span>
+          <b class="nav-contador" id="nav-prestamos">0</b>
+        </a>
+        <a href="#/deseos" data-ir="deseos" data-icono="star">
+          <svg class="ic" aria-hidden="true"><use href="#i-star"/></svg><span>{{ t('nav.wishlist') }}</span>
+          <b class="nav-contador" id="nav-deseos">0</b>
+        </a>
+      </nav>
+    </aside>
+    <div class="velo" id="velo" hidden></div>
+
+    <div class="principal">
+
+      <!-- ================= BARRA SUPERIOR ================= -->
+      <header class="topbar">
+        <button class="icono-btn solo-movil" id="btn-menu" aria-label="{{ t('nav.menu') }}">
+          <svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+        <div class="topbar-titulo">
+          <span class="topbar-ic"><svg class="ic" aria-hidden="true"><use id="topbar-icono" href="#i-book"/></svg></span>
+          <span id="topbar-texto">{{ t('nav.catalog') }}</span>
+        </div>
+
+        <div class="topbar-acciones">
+          <!-- Menú desplegable de idioma -->
+          <div class="idioma" id="idioma">
+            <button class="idioma-btn" id="idioma-btn" aria-haspopup="listbox" aria-expanded="false"
+                    aria-controls="idioma-menu" title="{{ t('lang.label') }}">
+              <svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg>
+              <span>{{ lang|upper }}</span>
+              <svg class="ic chevron" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+            </button>
+            <ul class="idioma-menu" id="idioma-menu" role="listbox" aria-label="{{ t('lang.label') }}" hidden>
+              <li class="idioma-titulo" role="presentation">{{ t('lang.label') }}</li>
+              {% for code in supported %}
+              <li role="option" tabindex="-1" data-lang="{{ code }}" aria-selected="{{ 'true' if code == lang else 'false' }}">
+                <span class="idioma-codigo">{{ code|upper }}</span>
+                <span>{{ t('lang.' ~ code) }}</span>
+                <svg class="ic check" aria-hidden="true"><use href="#i-check"/></svg>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <button class="btn btn-grad btn-nuevo" data-accion="nuevo-libro">
+            <svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg><span>{{ t('action.new_book') }}</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="contenido">
+
+        <!-- ================= CATÁLOGO ================= -->
+        <section class="vista" data-vista="catalogo" aria-labelledby="t-catalogo">
+          <div class="hero">
+            <div class="hero-texto">
+              <p class="eyebrow eyebrow-claro">{{ t('catalog.eyebrow') }}</p>
+              <h1 id="t-catalogo">{{ t('catalog.heading') }}</h1>
+              <p class="hero-lead">{{ t('catalog.lead') }}</p>
+              <div class="hero-acciones">
+                <button class="btn btn-blanco" data-accion="nuevo-libro">
+                  <svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg>{{ t('action.new_book') }}
+                </button>
+                <a class="btn btn-cristal" href="#/prestamos">
+                  {{ t('catalog.see_loans') }}<svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+                </a>
+              </div>
+            </div>
+            <div class="hero-libros" id="hero-libros" aria-hidden="true"></div>
+          </div>
+
+          <div class="barra-herramientas">
+            <label class="buscador">
+              <svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>
+              <input type="search" id="buscar" placeholder="{{ t('catalog.search') }}" aria-label="{{ t('catalog.search') }}" autocomplete="off">
+            </label>
+            <div class="segmentos" id="filtros-libros" role="group">
+              <button type="button" data-filtro="todos" class="activo"><span>{{ t('filter.all') }}</span><b></b></button>
+              <button type="button" data-filtro="disponibles"><span>{{ t('filter.available') }}</span><b></b></button>
+              <button type="button" data-filtro="prestados"><span>{{ t('filter.borrowed') }}</span><b></b></button>
+              <button type="button" data-filtro="deseos"><svg class="ic" aria-hidden="true"><use href="#i-star"/></svg><span>{{ t('filter.wishlist') }}</span><b></b></button>
+            </div>
+          </div>
+          <p class="conteo" id="conteo-libros" aria-live="polite"></p>
+
+          <div class="rejilla-libros" id="rejilla-libros"></div>
+        </section>
+
+        <!-- ================= PRÉSTAMOS ================= -->
+        <section class="vista" data-vista="prestamos" aria-labelledby="t-prestamos" hidden>
+          <header class="cabecera-vista">
+            <p class="eyebrow">{{ t('loans.eyebrow') }}</p>
+            <h1 id="t-prestamos">{{ t('loans.heading') }}</h1>
+            <p class="lead">{{ t('loans.lead') }}</p>
+          </header>
+
+          <div class="barra-herramientas">
+            <div class="segmentos" id="filtros-prestamos" role="group">
+              <button type="button" data-filtro-prestamo="todos" class="activo"><span>{{ t('filter.all') }}</span><b></b></button>
+              <button type="button" data-filtro-prestamo="activos"><span>{{ t('filter.active') }}</span><b></b></button>
+              <button type="button" data-filtro-prestamo="atrasados"><span>{{ t('filter.overdue') }}</span><b></b></button>
+              <button type="button" data-filtro-prestamo="devueltos"><span>{{ t('filter.returned') }}</span><b></b></button>
+            </div>
+          </div>
+
+          <div class="lista-prestamos" id="lista-prestamos"></div>
+        </section>
+
+        <!-- ================= LISTA DE DESEOS ================= -->
+        <section class="vista" data-vista="deseos" aria-labelledby="t-deseos" hidden>
+          <header class="cabecera-vista">
+            <p class="eyebrow">{{ t('wishlist.eyebrow') }}</p>
+            <h1 id="t-deseos">{{ t('wishlist.heading') }}</h1>
+            <p class="lead">{{ t('wishlist.note') }}</p>
+          </header>
+
+          <div class="panel">
+            <div class="huecos" id="lista-deseos"></div>
+            <div class="pie-panel">
+              <div class="anillo-fila">
+                <span class="anillo" id="anillo-deseos"><b>0/5</b></span>
+                <p id="deseos-pie"></p>
+              </div>
+              <button type="button" class="btn btn-peligro-suave btn-chico" id="btn-vaciar-deseos">
+                <svg class="ic" aria-hidden="true"><use href="#i-eraser"/></svg>{{ t('wishlist.clear') }}
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- ====== PANEL LATERAL: AGREGAR UN LIBRO ====== -->
+  <div class="capa capa-lateral" id="capa-libro" hidden>
+    <form class="drawer validado" id="form-libro" role="dialog" aria-modal="true"
+          aria-labelledby="titulo-drawer" autocomplete="off" novalidate>
+      <header class="drawer-cabeza">
+        <div>
+          <p class="eyebrow">{{ t('catalog.eyebrow') }}</p>
+          <h2 id="titulo-drawer">{{ t('form.add_book') }}</h2>
+        </div>
+        <button type="button" class="icono-btn" data-cerrar aria-label="{{ t('drawer.close') }}">
+          <svg class="ic" aria-hidden="true"><use href="#i-x"/></svg>
+        </button>
+      </header>
+
+      <div class="drawer-cuerpo">
+        <div class="vista-previa">
+          <div class="portada" id="previa-portada">
+            <div class="portada-arte" aria-hidden="true">
+              <span class="portada-titulo">{{ t('drawer.preview_title') }}</span>
+              <span class="portada-autor">{{ t('drawer.preview_author') }}</span>
+            </div>
+          </div>
+          <div class="vista-previa-texto">
+            <p class="eyebrow">{{ t('drawer.preview') }}</p>
+            <h3 id="previa-titulo">{{ t('drawer.preview_title') }}</h3>
+            <p id="previa-autor">{{ t('drawer.preview_author') }}</p>
+            <p class="mono" id="previa-meta">—</p>
+          </div>
+        </div>
+
+        <fieldset class="grupo">
+          <legend><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg>{{ t('drawer.autofill') }}</legend>
+          <div class="campo">
+            <label for="isbn">{{ t('form.isbn') }}</label>
+            <div class="campo-con-boton">
+              <div class="control">
+                <svg class="ic" aria-hidden="true"><use href="#i-barcode"/></svg>
+                <input type="text" id="isbn" data-regla="isbn" placeholder="978-612-xxxx-xx-x">
+                <svg class="ic estado-ic estado-ok" aria-hidden="true"><use href="#i-check"/></svg>
+                <svg class="ic estado-ic estado-mal" aria-hidden="true"><use href="#i-x"/></svg>
+              </div>
+              <button type="button" class="btn btn-oscuro" id="btn-buscar-isbn">
+                <svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>{{ t('form.lookup') }}
+              </button>
+            </div>
+            <small class="fallo" hidden></small>
+            <small class="pista">{{ t('hint.lookup') }}</small>
+          </div>
+          <!-- Resultado de la consulta a Open Library -->
+          <div id="resultado-externo" class="externo" aria-live="polite" hidden></div>
+        </fieldset>
+
+        <fieldset class="grupo">
+          <legend><svg class="ic" aria-hidden="true"><use href="#i-pen"/></svg>{{ t('drawer.details') }}</legend>
+          <div class="campo">
+            <label for="titulo">{{ t('form.title') }}</label>
+            <div class="control">
+              <svg class="ic" aria-hidden="true"><use href="#i-book"/></svg>
+              <input type="text" id="titulo" data-regla="title" placeholder="{{ t('form.title') }}">
+              <svg class="ic estado-ic estado-ok" aria-hidden="true"><use href="#i-check"/></svg>
+              <svg class="ic estado-ic estado-mal" aria-hidden="true"><use href="#i-x"/></svg>
+            </div>
+            <small class="fallo" hidden></small>
+            <small class="pista">{{ t('hint.title') }}</small>
+          </div>
+          <div class="fila-2 fila-autor">
+            <div class="campo">
+              <label for="autor">{{ t('form.author') }}</label>
+              <div class="control">
+                <svg class="ic" aria-hidden="true"><use href="#i-user"/></svg>
+                <input type="text" id="autor" data-regla="author" placeholder="{{ t('form.author') }}">
+                <svg class="ic estado-ic estado-ok" aria-hidden="true"><use href="#i-check"/></svg>
+                <svg class="ic estado-ic estado-mal" aria-hidden="true"><use href="#i-x"/></svg>
+              </div>
+              <small class="fallo" hidden></small>
+              <small class="pista">{{ t('hint.author') }}</small>
+            </div>
+            <div class="campo">
+              <label for="anio">{{ t('form.year') }}</label>
+              <div class="control">
+                <svg class="ic" aria-hidden="true"><use href="#i-calendar"/></svg>
+                <input type="text" id="anio" data-regla="year" inputmode="numeric" maxlength="4" placeholder="1967">
+                <svg class="ic estado-ic estado-ok" aria-hidden="true"><use href="#i-check"/></svg>
+                <svg class="ic estado-ic estado-mal" aria-hidden="true"><use href="#i-x"/></svg>
+              </div>
+              <small class="fallo" hidden></small>
+              <small class="pista">{{ t('hint.year') }}</small>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <footer class="drawer-pie">
+        <button type="button" class="btn btn-fantasma" data-cerrar>{{ t('confirm.cancel') }}</button>
+        <button type="submit" class="btn btn-grad">
+          <svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg>{{ t('form.add') }}
+        </button>
+      </footer>
+    </form>
+  </div>
+
+  <!-- ====== FORMULARIO DE PRÉSTAMO ====== -->
+  <div class="capa" id="capa-prestamo" hidden>
+    <div class="dialogo" role="dialog" aria-modal="true" aria-labelledby="titulo-prestamo">
+      <div class="dialogo-libro" id="prestamo-libro"></div>
+      <h2 id="titulo-prestamo">{{ t('loanform.heading') }}</h2>
+
+      <form id="form-prestamo" class="validado vertical" autocomplete="off" novalidate>
+        <div class="campo">
+          <label for="p-nombre">{{ t('loanform.borrower') }}</label>
+          <div class="control">
+            <svg class="ic" aria-hidden="true"><use href="#i-user"/></svg>
+            <input type="text" id="p-nombre" data-regla="borrower" placeholder="María López">
+            <svg class="ic estado-ic estado-ok" aria-hidden="true"><use href="#i-check"/></svg>
+            <svg class="ic estado-ic estado-mal" aria-hidden="true"><use href="#i-x"/></svg>
+          </div>
+          <small class="fallo" hidden></small>
+          <small class="pista">{{ t('hint.borrower') }}</small>
+        </div>
+        <div class="fila-2">
+          <div class="campo">
+            <label for="p-dni">{{ t('loanform.dni') }}</label>
+            <div class="control">
+              <svg class="ic" aria-hidden="true"><use href="#i-id"/></svg>
+              <input type="text" id="p-dni" data-regla="dni" inputmode="numeric" maxlength="8" placeholder="12345678">
+              <svg class="ic estado-ic estado-ok" aria-hidden="true"><use href="#i-check"/></svg>
+              <svg class="ic estado-ic estado-mal" aria-hidden="true"><use href="#i-x"/></svg>
+            </div>
+            <small class="fallo" hidden></small>
+            <small class="pista">{{ t('hint.dni') }}</small>
+          </div>
+          <div class="campo">
+            <label for="p-telefono">{{ t('loanform.phone') }}</label>
+            <div class="control">
+              <svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>
+              <input type="text" id="p-telefono" data-regla="phone" inputmode="numeric" maxlength="9" placeholder="987654321">
+              <svg class="ic estado-ic estado-ok" aria-hidden="true"><use href="#i-check"/></svg>
+              <svg class="ic estado-ic estado-mal" aria-hidden="true"><use href="#i-x"/></svg>
+            </div>
+            <small class="fallo" hidden></small>
+            <small class="pista">{{ t('hint.phone') }}</small>
+          </div>
+        </div>
+        <div class="campo">
+          <label for="p-email">{{ t('loanform.email') }}</label>
+          <div class="control">
+            <svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg>
+            <input type="text" id="p-email" data-regla="email" placeholder="nombre@dominio.pe">
+            <svg class="ic estado-ic estado-ok" aria-hidden="true"><use href="#i-check"/></svg>
+            <svg class="ic estado-ic estado-mal" aria-hidden="true"><use href="#i-x"/></svg>
+          </div>
+          <small class="fallo" hidden></small>
+          <small class="pista">{{ t('hint.email') }}</small>
+        </div>
+
+        <div class="botonera">
+          <button type="button" class="btn btn-fantasma" id="btn-cancelar-prestamo">{{ t('loanform.cancel') }}</button>
+          <button type="submit" class="btn btn-grad">
+            <svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>{{ t('loanform.submit') }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ====== CONFIRMACIÓN ANTES DE ELIMINAR ====== -->
+  <div class="capa" id="capa-confirmar" hidden>
+    <div class="dialogo dialogo-chico" role="alertdialog" aria-modal="true"
+         aria-labelledby="confirmar-titulo" aria-describedby="confirmar-cuerpo">
+      <span class="dialogo-ic"><svg class="ic" aria-hidden="true"><use href="#i-trash"/></svg></span>
+      <h2 id="confirmar-titulo">{{ t('confirm.delete') }}</h2>
+      <p id="confirmar-cuerpo"></p>
+      <div class="botonera">
+        <button type="button" class="btn btn-fantasma" id="confirmar-no">{{ t('confirm.cancel') }}</button>
+        <button type="button" class="btn btn-peligro" id="confirmar-si">
+          <svg class="ic" aria-hidden="true"><use href="#i-trash"/></svg>{{ t('confirm.ok') }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Avisos flotantes -->
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

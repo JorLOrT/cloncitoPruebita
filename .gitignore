@@ -1,0 +1,29 @@
+# ---- Material de entrega (no forma parte de la aplicación) ------------------
+# El documento Word, su PDF y las capturas se entregan aparte.
+*.docx
+*.pdf
+capturas/
+# Archivos temporales que crea Word mientras un documento está abierto
+~$*
+
+# ---- Base de datos ------------------------------------------------------------
+# Se crea sola al arrancar, con los libros de ejemplo.
+*.db
+*.sqlite3
+*.db-journal
+
+# ---- Python ---------------------------------------------------------------------
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# ---- Variables de entorno (la SECRET_KEY nunca se sube) ---------------------
+.env
+.env.*
+
+# ---- Sistema operativo y editores ------------------------------------------------
+.DS_Store
+.vscode/
+.idea/
+*.swp
