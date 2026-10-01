@@ -12,6 +12,9 @@ capturas/
 *.sqlite3
 *.db-journal
 
+# ---- Versión estática para Netlify (la genera netlify/build.py) -----------------
+dist/
+
 # ---- Python ---------------------------------------------------------------------
 .venv/
 venv/

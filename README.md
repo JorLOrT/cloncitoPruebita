@@ -34,6 +34,29 @@ docker run -p 5002:5002 biblioteca-clon
 
 ---
 
+## Publicarla en Netlify
+
+Netlify solo publica archivos estáticos: no ejecuta Flask ni guarda una base SQLite. Por eso el
+repositorio incluye una versión estática de la misma interfaz:
+
+- `netlify.toml` indica a Netlify que ejecute `python3 netlify/build.py` y publique `dist/`.
+- `netlify/build.py` genera la página en español (`/`) y en inglés (`/en/`) a partir de la misma
+  plantilla, y exporta del código Python los libros de ejemplo, los patrones de validación y los
+  textos de cada idioma.
+- `netlify/api-local.js` responde en el navegador a las rutas `/api/...` con las mismas reglas de
+  la biblioteca.
+
+En esa versión los datos se guardan en el navegador de cada visitante (`localStorage`): cada
+persona ve su propia biblioteca y no se comparte nada entre visitantes.
+
+Para probarla en local:
+
+```bash
+.venv/bin/python netlify/build.py && python3 -m http.server 8000 --directory dist
+```
+
+---
+
 ## La interfaz
 
 | Sección | Qué se hace ahí |
@@ -59,6 +82,8 @@ correspondían a otros libros (`data_access/database.py`).
 cloncitto/
 ├── app.py                      # Arranca Flask (puerto 5002)
 ├── requirements.txt · Dockerfile
+├── netlify.toml                # Despliegue en Netlify (versión estática)
+├── netlify/                    # build.py · api-local.js
 ├── entities/                   # Book y Loan
 ├── data_access/                # Base de datos SQLite y libros de ejemplo
 ├── business/                   # Reglas de la biblioteca y validaciones

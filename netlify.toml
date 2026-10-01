@@ -1,0 +1,6 @@
+# Netlify no ejecuta Flask ni guarda una base SQLite. En el despliegue se genera
+# una versión estática de la misma interfaz (netlify/build.py) y se publica dist/.
+# Las dependencias de requirements.txt las instala Netlify antes del build.
+[build]
+  command = "python3 netlify/build.py"
+  publish = "dist"
